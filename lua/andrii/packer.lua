@@ -13,9 +13,9 @@ return require('packer').startup(function(use)
     requires = { { 'nvim-lua/plenary.nvim' } }
   }
 
-  use({ 'rose-pine/neovim', as = 'rose-pine' })
+  use { "catppuccin/nvim", as = "catppuccin" }
 
-  vim.cmd('colorscheme rose-pine')
+  vim.cmd('colorscheme catppuccin-latte')
 
   use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
   use {
@@ -59,14 +59,30 @@ return require('packer').startup(function(use)
 
   use {'stevearc/dressing.nvim'}
 
-  use {'dart-lang/dart-vim-plugin'}
-  use {'thosakwe/vim-flutter'}
-
   use {
-    'akinsho/flutter-tools.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim',
-      'stevearc/dressing.nvim', -- optional for vim.ui.select
-    },
+    "folke/trouble.nvim",
+    requires = { "nvim-tree/nvim-web-devicons" },
   }
+
+  use { 'junegunn/fzf', run = './install --bin', }
+
+  use { 'ibhagwan/fzf-lua',
+    -- optional for icon support
+    requires = { 'nvim-tree/nvim-web-devicons' }
+  }
+
+  use { 'junegunn/fzf.vim' }
+
+
+
+  -- use {'dart-lang/dart-vim-plugin'}
+  -- use {'thosakwe/vim-flutter'}
+
+  -- use {
+  --   'akinsho/flutter-tools.nvim',
+  --   requires = {
+  --     'nvim-lua/plenary.nvim',
+  --     'stevearc/dressing.nvim', -- optional for vim.ui.select
+  --   },
+  -- }
 end)
