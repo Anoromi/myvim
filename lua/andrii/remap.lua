@@ -14,12 +14,16 @@ map("s", "l", { noremap = true})
 map("l", "n", { noremap = true})
 map("L", "N", { noremap = true})
 map("-", "$", { noremap = true })
-map("_", "^")
+map("_", "^", { noremap = true})
 map("N", "<C-w><C-w>")
 map("T", "<C-w><C-r>")
 map("H", "8<Down>")
 map("S", "8<Up>")
 map("D", "<C-w><C-r>")
+
+map("<leader>s", ":wall<cr>")
+
+
 
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
