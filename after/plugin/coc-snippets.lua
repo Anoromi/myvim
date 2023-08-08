@@ -17,13 +17,13 @@
 --xmap <leader>x  <Plug>(coc-convert-snippet)
 
 
-local keyset = vim.keymap.set
-
-local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
-
-keyset("i", "<C-l>", '<Plug>(coc-snippets-expand)', opts)
-
-keyset("v", "<C-j>", '<Plug>(coc-snippets-select)', opts)
+--local keyset = vim.keymap.set
+--
+--local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
+--
+--keyset("i", "<C-l>", '<Plug>(coc-snippets-expand)', opts)
+--
+--keyset("v", "<C-j>", '<Plug>(coc-snippets-select)', opts)
 
 
 

@@ -27,6 +27,8 @@ map("<leader>s", ":wall<cr>")
 
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
+--vim.keymap.set("n", "<leader>q", ":q!<CR>")
+
 
 
 -- map("<buffer>" <nowait> <left> - " remap left arrow key to go up one directory
