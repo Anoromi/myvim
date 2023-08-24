@@ -12,7 +12,9 @@ require('telescope').setup {
       ".output",
       ".nuxt",
       "dist",
-      ".next"
+      ".next",
+      ".vendor",
+      "./var/cache/dev"
     },
     vimgrep_arguments = {
       'rg',

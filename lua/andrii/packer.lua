@@ -108,6 +108,11 @@ return require('packer').startup(function(use)
 
   use 'mfussenegger/nvim-jdtls'
 
+  use {
+    "jose-elias-alvarez/null-ls.nvim",
+    requires = 'nvim-lua/plenary.nvim',
+  }
+
   --use { 'neoclide/coc.nvim',
   --  branch = "release",
   --}
