@@ -1,8 +1,27 @@
 {
-	"snip1": {
-		"prefix": "lua",
-		"body": [
-			"lualualua"
-		]
-	}
+  "snip1": {
+    "prefix": "lua",
+    "body": [
+      "lualualua"
+    ]
+  },
+  "reactcomponent": {
+    "prefix": "reactComponent",
+    "body": [
+      "\"use client\"",
+      "type Props = {",
+      "",
+      "}",
+      "export default function ${1}({}: Props) {",
+      "  ${2}",
+      "}"
+    ]
+  },
+  "reduxHook": {
+    "body": [
+      "const state = useAppSelector((state) => $1)",
+      "const dispatch = useAppDispatch()",
+      "$2"
+    ]
+  }
 }

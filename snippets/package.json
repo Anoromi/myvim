@@ -13,10 +13,10 @@
 					"lua"
 				],
 				"path": "./lua.json"
-			}
+			},
       {
         "language": [
-          "tsx", "jsx"
+          "typescriptreact", "javascriptreact"
         ],
         "path": "./react-projects.json"
       }

@@ -12,7 +12,7 @@ lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({ buffer = bufnr })
 end)
 
-lsp.skip_server_setup({ 'jdtls', 
+lsp.skip_server_setup({ 'jdtls',
   'phpactor',
   --'intelephense'
 })
@@ -113,6 +113,7 @@ null_ls.setup({
     -- make sure the source name is supported by null-ls
     -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
     null_ls.builtins.formatting.prettier,
+    --null_ls.builtins.formatting.prettierd,
     null_ls.builtins.diagnostics.eslint,
     --null_ls.builtins.formatting.stylua,
     null_ls.builtins.formatting.phpcsfixer,
@@ -122,7 +123,9 @@ null_ls.setup({
 })
 
 
-vim.keymap.set("n", "<leader>fm", ":LspZeroFormat<CR>")
+--vim.keymap.set("n", "<leader>fm", ":LspZeroFormat<CR>")
+vim.keymap.set("n", "<leader>fm", ":lua vim.lsp.buf.format({ timeout_ms = 10000})<CR>")
+
 
 
 require('lspconfig').tsserver.setup({
@@ -130,6 +133,27 @@ require('lspconfig').tsserver.setup({
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentFormattingRangeProvider = false
   end,
+})
+
+require('lspconfig').tailwindcss.setup({
+  settings = {
+    tailwindCSS = {
+      lint = {
+        --cssConflict = "ignore"
+      },
+      classAttributes = { "class", "className", "ngClass", ".*Styles", '.*Class' },
+      experimental = {
+        classRegex = {
+          'tw([^])', 'tw="([^"])', 'tw={"([^"}])',
+          "clsx\\(([^)]*)\\)",
+          "cn\\(([^)]*)\\)",
+          "a*Class='([^']+)'"
+          -- 'tw\.\w+([^])',
+          --'tw\(.?\)([^])',
+        },
+      },
+    },
+  },
 })
 
 require('lspconfig').cssls.setup({

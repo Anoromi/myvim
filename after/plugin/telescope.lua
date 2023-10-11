@@ -14,7 +14,8 @@ require('telescope').setup {
       "dist",
       ".next",
       ".vendor",
-      "./var/cache/dev"
+      "./var/cache/dev",
+      "target"
     },
     vimgrep_arguments = {
       'rg',
