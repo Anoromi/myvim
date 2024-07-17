@@ -39,7 +39,6 @@ return require('packer').startup(function(use)
 
   -- use('nvim-treesitter/playground')
   use('ThePrimeagen/harpoon')
-  use('mbbill/undotree')
   use('tpope/vim-fugitive')
 
   use { 'jparise/vim-graphql' }
@@ -111,6 +110,10 @@ return require('packer').startup(function(use)
   use {
     "jose-elias-alvarez/null-ls.nvim",
     requires = 'nvim-lua/plenary.nvim',
+  }
+
+  use {
+    "vhyrro/luarocks.nvim"
   }
 
   --use { 'neoclide/coc.nvim',

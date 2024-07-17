@@ -17,7 +17,9 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 
 
-vim.opt.undodir = os.getenv("USER") .. "/.vim/undodir"
+--vim.opt.undodir = os.getenv("USER") .. "/.vim/undodir"
+vim.opt.undodir = vim.fn.expand('~/.vim/undodir')
+
 vim.opt.undofile = true
 
 vim.opt.hlsearch = false
