@@ -23,9 +23,6 @@ require 'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = { "php" },
   },
 
-  autotag = {
-    enable = true
-  }
 }
 
 --lvim.builtin.treesitter.autotag.enable = true

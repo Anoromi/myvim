@@ -163,3 +163,12 @@ require('lspconfig').cssls.setup({
     client.server_capabilities.documentFormattingRangeProvider = false
   end,
 })
+
+require('lspconfig').volar.setup {
+  filetypes = {'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'vue'},
+  init_options = {
+    vue = {
+      hybridMode = false
+    }
+  }
+}

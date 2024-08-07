@@ -19,6 +19,12 @@
           "typescriptreact", "javascriptreact"
         ],
         "path": "./react-projects.json"
+      },
+      {
+        "language": [
+          "vue"
+        ],
+        "path": "./vue.json"
       }
 		]
 	}
