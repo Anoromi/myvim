@@ -1,1 +1,1 @@
-require("luarocks-nvim").setup()
+--require("luarocks-nvim").setup()

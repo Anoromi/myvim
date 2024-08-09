@@ -133,6 +133,16 @@ require('lspconfig').tsserver.setup({
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentFormattingRangeProvider = false
   end,
+
+  init_options = {
+    plugins = {
+      {
+        name = "@vue/typescript-plugin",
+        location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
+        languages = { "javascript", "typescript", "vue" },
+      },
+    },
+  }
 })
 
 require('lspconfig').tailwindcss.setup({
@@ -165,7 +175,7 @@ require('lspconfig').cssls.setup({
 })
 
 require('lspconfig').volar.setup {
-  filetypes = {'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'vue'},
+  filetypes = { 'vue' },
   init_options = {
     vue = {
       hybridMode = false
