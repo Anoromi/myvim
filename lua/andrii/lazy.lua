@@ -31,7 +31,7 @@ require("lazy").setup({
       dependencies = { { 'nvim-lua/plenary.nvim' }, { 'nvim-tree/nvim-web-devicons' } }
     },
     {
-      'nvim-treesitter/nvim-treesitter',  build = ':TSUpdate'
+      'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'
     },
     {
       'windwp/nvim-ts-autotag',
@@ -41,19 +41,21 @@ require("lazy").setup({
     {
       "windwp/nvim-autopairs",
       dependencies = 'nvim-treesitter/nvim-treesitter',
-      opts = {}
+      opts = {
+        enable_check_bracket_line = false
+      }
     },
     {
-        "ThePrimeagen/harpoon",
-        branch = "harpoon2",
-        dependencies = { "nvim-lua/plenary.nvim" }
+      "ThePrimeagen/harpoon",
+      branch = "harpoon2",
+      dependencies = { "nvim-lua/plenary.nvim" }
     },
     {
       "tpope/vim-fugitive"
     },
     {
       'VonHeikemen/lsp-zero.nvim',
-      branch = 'v2.x',
+      branch = 'v4.x',
       dependencies = {
         -- LSP Support
         { 'neovim/nvim-lspconfig' },             -- Required
@@ -79,19 +81,108 @@ require("lazy").setup({
     --     dependencies = { 'nvim-tree/nvim-web-devicons' }
     --   }
     {
-      "jose-elias-alvarez/null-ls.nvim",
-      dependencies = 'nvim-lua/plenary.nvim',
+      "nvimtools/none-ls.nvim",
+      dependencies = { 'nvim-lua/plenary.nvim', 'nvimtools/none-ls-extras.nvim' },
     },
 
     {
       "Mofiqul/vscode.nvim"
-    }
+    },
+    {
+      "folke/trouble.nvim",
+      opts = {}, -- for default options, refer to the configuration section for custom setup.
+      cmd = "Trouble",
+      keys = {
+        {
+          "<leader>xx",
+          "<cmd>Trouble diagnostics toggle<cr>",
+          desc = "Diagnostics (Trouble)",
+        },
+        {
+          "<leader>xX",
+          "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+          desc = "Buffer Diagnostics (Trouble)",
+        },
+        {
+          "<leader>cs",
+          "<cmd>Trouble symbols toggle focus=false<cr>",
+          desc = "Symbols (Trouble)",
+        },
+        {
+          "<leader>cl",
+          "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+          desc = "LSP Definitions / references / ... (Trouble)",
+        },
+        {
+          "<leader>xL",
+          "<cmd>Trouble loclist toggle<cr>",
+          desc = "Location List (Trouble)",
+        },
+        {
+          "<leader>xQ",
+          "<cmd>Trouble qflist toggle<cr>",
+          desc = "Quickfix List (Trouble)",
+        },
+      },
+    },
+    {
+      "kylechui/nvim-surround",
+      version = "*", -- Use for stability; omit to use `main` branch for the latest features
+      event = "VeryLazy",
+      config = function()
+        require("nvim-surround").setup({
+          -- Configuration here, or leave empty to use defaults
+        })
+      end
+    },
+    {
+      'numToStr/Comment.nvim',
+      opts = {
+        -- add any options here
+      }
+    },
+    {
+      'nvim-lualine/lualine.nvim',
+      dependencies = { 'nvim-tree/nvim-web-devicons' },
+       opts = {
+         theme = "light",     -- "auto" will set the theme dynamically based on the colorscheme
+       },
+    },
+    {
+      "scottmckendry/cyberdream.nvim",
+      lazy = false,
+      priority = 1000,
+      opts = {
+        theme = {
+          variant = "auto"
+        }
+      }
+    },
+    --{
+    --  "JManch/sunset.nvim",
+    --  dependencies = {
+    --    {
+    --      "scottmckendry/cyberdream.nvim"
+    --      -- "colorscheme plugin",
+    --      -- config = function
+    --      --     -- Colorscheme plugin config
+    --      -- end,
+    --    },
+    --  },
+    --  lazy = false,
+    --  priority = 1000,
+    --  opts = {
+    --    latitude = 50,
+    --    longitude = 30,
+    --  },
+    --}
+
 
   },
 
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = { "vscode" } },
+  install = { colorscheme = { "cyberdream" } },
   -- automatically check for plugin updates
   checker = { enabled = true },
 
