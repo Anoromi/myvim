@@ -56,7 +56,7 @@
 
 
 function ApplyColor(color)
-	color = color or "cyberdream"
+	color = color or "vscode"
 	vim.cmd.colorscheme(color)
   vim.o.background = 'light'
 
