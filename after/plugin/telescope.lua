@@ -15,7 +15,8 @@ require('telescope').setup {
       ".next",
       ".vendor",
       "./var/cache/dev",
-      "target"
+      "target",
+      ".angular"
     },
     vimgrep_arguments = {
       'rg',
@@ -30,3 +31,5 @@ require('telescope').setup {
     },
   }
 }
+
+require('telescope').load_extension('fzf')

@@ -23,7 +23,12 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim
 require("lazy").setup({
+  --rocks = {
+  --  hererocks = true
+  --},
+  concurrency = 1,
   spec = {
+
     {
       'nvim-telescope/telescope.nvim',
       tag = '0.1.8',
@@ -144,9 +149,9 @@ require("lazy").setup({
     {
       'nvim-lualine/lualine.nvim',
       dependencies = { 'nvim-tree/nvim-web-devicons' },
-       opts = {
-         theme = "light",     -- "auto" will set the theme dynamically based on the colorscheme
-       },
+      opts = {
+        theme = "light", -- "auto" will set the theme dynamically based on the colorscheme
+      },
     },
     {
       "scottmckendry/cyberdream.nvim",
@@ -158,6 +163,17 @@ require("lazy").setup({
         }
       }
     },
+    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    { "junegunn/fzf",                             build = "./install --bin" },
+    {
+      "ibhagwan/fzf-lua",
+      -- optional for icon support
+      dependencies = { "nvim-tree/nvim-web-devicons" },
+      config = function()
+        -- calling `setup` is optional for customization
+        require("fzf-lua").setup({})
+      end
+    }
     --{
     --  "JManch/sunset.nvim",
     --  dependencies = {
