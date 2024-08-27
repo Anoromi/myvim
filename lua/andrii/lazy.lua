@@ -26,7 +26,6 @@ require("lazy").setup({
   --rocks = {
   --  hererocks = true
   --},
-  concurrency = 1,
   spec = {
 
     {
@@ -167,12 +166,10 @@ require("lazy").setup({
     { "junegunn/fzf",                             build = "./install --bin" },
     {
       "ibhagwan/fzf-lua",
+      lazy = false,
       -- optional for icon support
       dependencies = { "nvim-tree/nvim-web-devicons" },
-      config = function()
-        -- calling `setup` is optional for customization
-        require("fzf-lua").setup({})
-      end
+
     }
     --{
     --  "JManch/sunset.nvim",
@@ -198,8 +195,8 @@ require("lazy").setup({
 
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = { "cyberdream" } },
+  --install = { colorscheme = { "vscode" } },
   -- automatically check for plugin updates
-  checker = { enabled = true },
+  checker = { enabled = false },
 
 })
