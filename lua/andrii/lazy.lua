@@ -38,6 +38,9 @@ require("lazy").setup({
       'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'
     },
     {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+    },
+    {
       'windwp/nvim-ts-autotag',
       dependencies = 'nvim-treesitter/nvim-treesitter',
       opts = {}
@@ -170,7 +173,8 @@ require("lazy").setup({
       -- optional for icon support
       dependencies = { "nvim-tree/nvim-web-devicons" },
 
-    }
+    },
+    { "gbrlsnchs/telescope-lsp-handlers.nvim" }
     --{
     --  "JManch/sunset.nvim",
     --  dependencies = {
@@ -195,7 +199,7 @@ require("lazy").setup({
 
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
-  --install = { colorscheme = { "vscode" } },
+  install = { colorscheme = { "vscode" } },
   -- automatically check for plugin updates
   checker = { enabled = false },
 

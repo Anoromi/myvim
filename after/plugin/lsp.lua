@@ -13,7 +13,19 @@ local lsp = require("lsp-zero")
 --end)
 
 local lsp_attach = function(client, bufnr)
-  lsp.default_keymaps({ buffer = bufnr })
+  --lsp.default_keymaps({ buffer = bufnr })
+  local opts = { buffer = bufnr }
+
+  vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+  --vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+  vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
+  --vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
+  --vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+  --vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+  vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
+  vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+  vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+  vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
 end
 
 
@@ -44,8 +56,8 @@ require('mason-lspconfig').setup({
     tsserver = function()
       require('lspconfig').tsserver.setup({
         on_init = function(client)
-          client.server_capabilities.documentFormattingProvider = false
-          client.server_capabilities.documentFormattingRangeProvider = false
+          --client.server_capabilities.documentFormattingProvider = false
+          --client.server_capabilities.documentFormattingRangeProvider = false
         end,
         init_options = {
           plugins = {
@@ -202,9 +214,9 @@ null_ls.setup({
     null_ls.builtins.formatting.prettier,
     --null_ls.builtins.formatting.prettierd,
     --
-    require("none-ls.code_actions.eslint"),
-    require("none-ls.diagnostics.eslint"),
-    require("none-ls.formatting.eslint"),
+    -- require("none-ls.code_actions.eslint"),
+    -- require("none-ls.diagnostics.eslint"),
+    -- require("none-ls.formatting.eslint"),
 
     --null_ls.builtins.diagnostics.eslint,
     --null_ls.builtins.formatting.stylua,
