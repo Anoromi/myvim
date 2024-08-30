@@ -101,11 +101,6 @@ require 'nvim-treesitter.configs'.setup {
   },
 }
 
-local function helloThere(hello)
-  local he = 3
-  local gi = 3
-end
-
 --require("nvim-treesitter.configs").setup({
 --})
 --lvim.builtin.treesitter.autotag.enable = true
