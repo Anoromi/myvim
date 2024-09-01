@@ -1,4 +1,3 @@
-
 --require('rose-pine').setup({
 --	--- @usage 'auto'|'main'|'moon'|'dawn'
 --	variant = 'dawn',
@@ -56,8 +55,8 @@
 
 
 function ApplyColor(color)
-	color = color or "vscode"
-	vim.cmd.colorscheme(color)
+  color = color or "vscode"
+  vim.cmd.colorscheme(color)
   vim.o.background = 'light'
 
   --	vim.api.nvim_set_hl(0, "Normal", { bg = 0x11111111 })
@@ -65,5 +64,3 @@ function ApplyColor(color)
 end
 
 ApplyColor()
-
-

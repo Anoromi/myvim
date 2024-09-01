@@ -1,4 +1,5 @@
 local lsp = require("lsp-zero")
+local config = require("andrii.config")
 
 
 --lsp.ensure_installed({
@@ -42,6 +43,9 @@ lsp.extend_lspconfig({
 --  --'intelephense'
 --})
 
+local lsp_config = config.lsp or {}
+local skip_server_setup = lsp_config.skip_server_setup or {}
+
 require('mason').setup()
 require('mason-lspconfig').setup({
   ensure_installed = { 'tsserver', 'rust_analyzer', 'lua_ls' },
@@ -53,6 +57,11 @@ require('mason-lspconfig').setup({
       require('lspconfig')[server_name].setup({})
     end,
 
+    eslint = function()
+      if skip_server_setup.eslint == nil then
+        require('lspconfig').eslint.setup({})
+      end
+    end,
     tsserver = function()
       require('lspconfig').tsserver.setup({
         on_init = function(client)
@@ -99,8 +108,8 @@ require('mason-lspconfig').setup({
     cssls = function()
       require('lspconfig').cssls.setup({
         on_init = function(client)
-          client.server_capabilities.documentFormattingProvider = false
-          client.server_capabilities.documentFormattingRangeProvider = false
+          --client.server_capabilities.documentFormattingProvider = false
+          --client.server_capabilities.documentFormattingRangeProvider = false
         end,
       })
     end,
@@ -211,8 +220,8 @@ null_ls.setup({
     -- Replace these with the tools you have installed
     -- make sure the source name is supported by null-ls
     -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
-    null_ls.builtins.formatting.prettier,
-    --null_ls.builtins.formatting.prettierd,
+    --null_ls.builtins.formatting.prettier,
+    null_ls.builtins.formatting.prettierd,
     --
     -- require("none-ls.code_actions.eslint"),
     -- require("none-ls.diagnostics.eslint"),
