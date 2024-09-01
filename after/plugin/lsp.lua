@@ -63,6 +63,10 @@ require('mason-lspconfig').setup({
       end
     end,
     tsserver = function()
+      local node_modules = require('os').getenv("GLOBAL_NODE_MODULES")
+      local Path = require("pathlib")
+      local plugin = Path(node_modules) / "@vue" / "typescript-plugin"
+
       require('lspconfig').tsserver.setup({
         on_init = function(client)
           --client.server_capabilities.documentFormattingProvider = false
@@ -72,11 +76,17 @@ require('mason-lspconfig').setup({
           plugins = {
             {
               name = "@vue/typescript-plugin",
-              location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
+              --location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
+              location = tostring(plugin),
               languages = { "javascript", "typescript", "vue" },
             },
           },
-        }
+        },
+        filetypes = {
+          "javascript",
+          "typescript",
+          "vue",
+        },
       })
     end,
 
@@ -115,14 +125,7 @@ require('mason-lspconfig').setup({
     end,
 
     volar = function()
-      require('lspconfig').volar.setup {
-        filetypes = { 'vue' },
-        init_options = {
-          vue = {
-            hybridMode = false
-          }
-        }
-      }
+      require('lspconfig').volar.setup {}
     end
   }
 })
