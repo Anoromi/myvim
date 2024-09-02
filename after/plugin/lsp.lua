@@ -66,6 +66,9 @@ require('mason-lspconfig').setup({
       local node_modules = require('os').getenv("GLOBAL_NODE_MODULES")
       local Path = require("pathlib")
       local plugin = Path(node_modules) / "@vue" / "typescript-plugin"
+      if node_modules == nil then
+        vim.notify("No global node modules found, lspconfig won't be able to use @vue/typescript-plugin")
+      end
 
       require('lspconfig').tsserver.setup({
         on_init = function(client)
