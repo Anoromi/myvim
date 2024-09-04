@@ -30,7 +30,6 @@ local lsp_attach = function(client, bufnr)
 end
 
 
-
 lsp.extend_lspconfig({
   capabilities = require("cmp_nvim_lsp").default_capabilities(),
   lsp_attach = lsp_attach,
@@ -196,7 +195,7 @@ cmp.setup({
     { name = 'path' },
     { name = 'nvim_lsp' },
     { name = 'buffer' },
-    { name = 'luasnip', keyword_length = 1 },
+    { name = 'luasnip' },
   },
   mapping = cmp_mappings,
   --completion = {
@@ -211,10 +210,11 @@ cmp.setup({
 
 
 
---require('luasnip.loaders.from_vscode').lazy_load({
---  paths = "~/.config/nvim/snippets"
---})
 
+require('luasnip.loaders.from_vscode').lazy_load({
+  -- paths = "~/.config/nvim/snippets"
+  paths = "snippets"
+})
 
 
 
@@ -226,8 +226,8 @@ null_ls.setup({
     -- Replace these with the tools you have installed
     -- make sure the source name is supported by null-ls
     -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
-    --null_ls.builtins.formatting.prettier,
-    null_ls.builtins.formatting.prettierd,
+    null_ls.builtins.formatting.prettier,
+    --null_ls.builtins.formatting.prettierd,
     --
     -- require("none-ls.code_actions.eslint"),
     -- require("none-ls.diagnostics.eslint"),

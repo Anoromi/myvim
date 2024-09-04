@@ -15,12 +15,12 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+
 -- Make sure to setup `mapleader` and `maplocalleader` before
 -- loading lazy.nvim so that mappings are correct.
 -- This is also a good place to setup other settings (vim.opt)
 --vim.g.mapleader = " "
 --vim.g.maplocalleader = "\\"
-
 -- Setup lazy.nvim
 require("lazy").setup({
   --rocks = {
@@ -59,6 +59,16 @@ require("lazy").setup({
     },
     {
       "tpope/vim-fugitive"
+    },
+    {
+      "L3MON4D3/LuaSnip",
+      -- follow latest release.
+      version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+      -- install jsregexp (optional!).
+      build = "make install_jsregexp",
+      dependencies = {
+        { "rafamadriz/friendly-snippets" }
+      }
     },
     {
       'VonHeikemen/lsp-zero.nvim',
