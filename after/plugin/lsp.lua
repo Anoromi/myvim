@@ -210,10 +210,10 @@ cmp.setup({
 
 
 
+--const Path = require("pathlib")
 
 require('luasnip.loaders.from_vscode').lazy_load({
-  -- paths = "~/.config/nvim/snippets"
-  paths = "snippets"
+  paths = vim.fn.stdpath('config') .. '/snippets'
 })
 
 
