@@ -17,8 +17,13 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 
 
+local Path = require("pathlib")
+
+local dir = Path('~')
+local neovimConfigPath = dir / ".vim/undodir"
+
 --vim.opt.undodir = os.getenv("USER") .. "/.vim/undodir"
-vim.opt.undodir = vim.fn.expand('~/.vim/undodir')
+vim.opt.undodir = vim.fn.expand(tostring(neovimConfigPath))
 
 vim.opt.undofile = true
 
@@ -38,5 +43,4 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "90"
 
 vim.opt.clipboard = "unnamedplus"
-
 
