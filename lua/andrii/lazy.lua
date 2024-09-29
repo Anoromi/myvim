@@ -15,7 +15,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-
 -- Make sure to setup `mapleader` and `maplocalleader` before
 -- loading lazy.nvim so that mappings are correct.
 -- This is also a good place to setup other settings (vim.opt)
@@ -162,7 +161,7 @@ require("lazy").setup({
       'nvim-lualine/lualine.nvim',
       dependencies = { 'nvim-tree/nvim-web-devicons' },
       opts = {
-        theme = "light", -- "auto" will set the theme dynamically based on the colorscheme
+        theme = "vscode", -- "auto" will set the theme dynamically based on the colorscheme
       },
     },
     {
@@ -213,7 +212,32 @@ require("lazy").setup({
     },
     {
       "ggandor/leap.nvim"
-    }
+    },
+
+    -- Custom Parameters (with defaults)
+    {
+      "David-Kunz/gen.nvim",
+    },
+    {
+      "olimorris/codecompanion.nvim",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "nvim-treesitter/nvim-treesitter",
+        "hrsh7th/nvim-cmp",                      -- Optional: For using slash commands and variables in the chat buffer
+        "nvim-telescope/telescope.nvim",         -- Optional: For using slash commands
+        { "stevearc/dressing.nvim", opts = {} }, -- Optional: Improves the default Neovim UI
+      },
+      config = true
+    },
+    -- {
+    --   "supermaven-inc/supermaven-nvim",
+    --   config = function()
+    --     require("supermaven-nvim").setup({})
+    --   end,
+    -- },
+    --{
+    --  "easymotion/vim-easymotion"
+    --}
 
   },
 
