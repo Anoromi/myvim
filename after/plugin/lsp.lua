@@ -27,6 +27,8 @@ local lsp_attach = function(client, bufnr)
   vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
   vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
   vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+  vim.keymap.set("n", "<A-s>", vim.lsp.buf.signature_help, { desc="Signature hint"})
+  --vim.keymap.set("i", "<C-S>", vim.lsp.buf.signature_help, { desc="Signature hint"})
 end
 
 
@@ -44,10 +46,9 @@ lsp.extend_lspconfig({
 
 local lsp_config = config.lsp or {}
 local skip_server_setup = lsp_config.skip_server_setup or {}
-
 require('mason').setup()
 require('mason-lspconfig').setup({
-  ensure_installed = { 'tsserver', 'rust_analyzer', 'lua_ls' },
+  ensure_installed = { 'ts_ls', 'rust_analyzer', 'lua_ls' },
   handlers = {
     jdtls = lsp.noop,
     phpactor = lsp.noop,
@@ -56,12 +57,13 @@ require('mason-lspconfig').setup({
       require('lspconfig')[server_name].setup({})
     end,
 
+    --eslint = lsp.noop,
     eslint = function()
       if skip_server_setup.eslint == nil then
         require('lspconfig').eslint.setup({})
       end
     end,
-    tsserver = function()
+    ts_ls = function()
       local node_modules = require('os').getenv("GLOBAL_NODE_MODULES")
       local Path = require("pathlib")
       local plugin = Path(node_modules) / "@vue" / "typescript-plugin"
@@ -69,7 +71,7 @@ require('mason-lspconfig').setup({
         vim.notify("No global node modules found, lspconfig won't be able to use @vue/typescript-plugin")
       end
 
-      require('lspconfig').tsserver.setup({
+      require('lspconfig').ts_ls.setup({
         on_init = function(client)
           --client.server_capabilities.documentFormattingProvider = false
           --client.server_capabilities.documentFormattingRangeProvider = false
@@ -91,6 +93,7 @@ require('mason-lspconfig').setup({
         },
       })
     end,
+
 
 
     tailwindcss = function()
@@ -226,12 +229,15 @@ null_ls.setup({
     -- Replace these with the tools you have installed
     -- make sure the source name is supported by null-ls
     -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
-    null_ls.builtins.formatting.prettier,
-    --null_ls.builtins.formatting.prettierd,
+    --null_ls.builtins.formatting.prettier,
+    null_ls.builtins.formatting.prettierd,
     --
-    -- require("none-ls.code_actions.eslint"),
-    -- require("none-ls.diagnostics.eslint"),
-    -- require("none-ls.formatting.eslint"),
+    --require("none-ls.code_actions.eslint"),
+    --require("none-ls.diagnostics.eslint"),
+    --require("none-ls.formatting.eslint"),
+    --require("none-ls.code_actions.eslint_d"),
+    --require("none-ls.diagnostics.eslint_d"),
+    --require("none-ls.formatting.eslint_d"),
 
     --null_ls.builtins.diagnostics.eslint,
     --null_ls.builtins.formatting.stylua,
@@ -243,7 +249,7 @@ null_ls.setup({
 
 
 --vim.keymap.set("n", "<leader>fm", ":LspZeroFormat<CR>")
-vim.keymap.set("n", "<leader>fm", ":lua vim.lsp.buf.format({ timeout_ms = 10000})<CR>")
+vim.keymap.set("n", "<A-f>", ":lua vim.lsp.buf.format({ timeout_ms = 10000})<CR>")
 
 
 
