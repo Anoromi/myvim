@@ -28,6 +28,7 @@ local lsp_attach = function(client, bufnr)
   vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
   vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
   vim.keymap.set("n", "<A-s>", vim.lsp.buf.signature_help, { desc="Signature hint"})
+  vim.keymap.set("i", "<A-s>", vim.lsp.buf.signature_help, { desc="Signature hint"})
   --vim.keymap.set("i", "<C-S>", vim.lsp.buf.signature_help, { desc="Signature hint"})
 end
 
@@ -68,7 +69,7 @@ require('mason-lspconfig').setup({
       local Path = require("pathlib")
       local plugin = Path(node_modules) / "@vue" / "typescript-plugin"
       if node_modules == nil then
-        vim.notify("No global node modules found, lspconfig won't be able to use @vue/typescript-plugin")
+        vim.notify("No global node modules (GLOBAL_NODE_MODULES) found, lspconfig won't be able to use @vue/typescript-plugin", vim.log.levels.WARN)
       end
 
       require('lspconfig').ts_ls.setup({
