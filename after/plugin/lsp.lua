@@ -27,8 +27,8 @@ local lsp_attach = function(client, bufnr)
   vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
   vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
   vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
-  vim.keymap.set("n", "<A-s>", vim.lsp.buf.signature_help, { desc="Signature hint"})
-  vim.keymap.set("i", "<A-s>", vim.lsp.buf.signature_help, { desc="Signature hint"})
+  vim.keymap.set("n", "<A-s>", vim.lsp.buf.signature_help, { desc = "Signature hint" })
+  vim.keymap.set("i", "<A-s>", vim.lsp.buf.signature_help, { desc = "Signature hint" })
   --vim.keymap.set("i", "<C-S>", vim.lsp.buf.signature_help, { desc="Signature hint"})
 end
 
@@ -69,7 +69,9 @@ require('mason-lspconfig').setup({
       local Path = require("pathlib")
       local plugin = Path(node_modules) / "@vue" / "typescript-plugin"
       if node_modules == nil then
-        vim.notify("No global node modules (GLOBAL_NODE_MODULES) found, lspconfig won't be able to use @vue/typescript-plugin", vim.log.levels.WARN)
+        vim.notify(
+        "No global node modules (GLOBAL_NODE_MODULES) found, lspconfig won't be able to use @vue/typescript-plugin",
+          vim.log.levels.WARN)
       end
 
       require('lspconfig').ts_ls.setup({
@@ -149,7 +151,7 @@ require('mason-lspconfig').setup({
 --})
 
 --lsp.new_server({
---  name = 'volar-bultin',
+--  name = 'volar-builtin',
 --  cmd = { 'vue-language-server', "--stdio" },
 --  filetypes = {
 --    'vue'
@@ -232,6 +234,7 @@ null_ls.setup({
     -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
     --null_ls.builtins.formatting.prettier,
     null_ls.builtins.formatting.prettierd,
+    --require("none-ls.formatting.rustfmt"),
     --
     --require("none-ls.code_actions.eslint"),
     --require("none-ls.diagnostics.eslint"),
