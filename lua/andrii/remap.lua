@@ -41,7 +41,7 @@ map("<leader>t", ":q!<cr>")
 --map("<C-n>", ":wincmd t<CR>")
 --map("<C-s>", ":wincmd n<CR>")
 
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+--vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 vim.keymap.set("n", "<leader>cbw", function ()
   vim.o.background = 'light'
