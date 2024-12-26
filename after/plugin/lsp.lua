@@ -70,7 +70,7 @@ require('mason-lspconfig').setup({
       local plugin = Path(node_modules) / "@vue" / "typescript-plugin"
       if node_modules == nil then
         vim.notify(
-        "No global node modules (GLOBAL_NODE_MODULES) found, lspconfig won't be able to use @vue/typescript-plugin",
+          "No global node modules (GLOBAL_NODE_MODULES) found, lspconfig won't be able to use @vue/typescript-plugin",
           vim.log.levels.WARN)
       end
 
@@ -93,6 +93,8 @@ require('mason-lspconfig').setup({
           "javascript",
           "typescript",
           "vue",
+          "javascriptreact",
+          "typescriptreact",
         },
       })
     end,
@@ -132,9 +134,18 @@ require('mason-lspconfig').setup({
       })
     end,
 
-    volar = function()
-      require('lspconfig').volar.setup {}
+    cssmodules_ls = function()
+      require 'lspconfig'.cssmodules_ls.setup {
+        on_attach = function(client)
+          client.server_capabilities.definitionProvider = false
+        end,
+      }
     end
+
+
+    -- volar = function()
+    --   require('lspconfig').volar.setup {}
+    -- end
   }
 })
 
@@ -255,6 +266,16 @@ null_ls.setup({
 --vim.keymap.set("n", "<leader>fm", ":LspZeroFormat<CR>")
 vim.keymap.set("n", "<A-f>", ":lua vim.lsp.buf.format({ timeout_ms = 10000})<CR>")
 
+
+--for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
+--    local default_diagnostic_handler = vim.lsp.handlers[method]
+--    vim.lsp.handlers[method] = function(err, result, context, config)
+--        if err ~= nil and err.code == -32802 then
+--            return
+--        end
+--        return default_diagnostic_handler(err, result, context, config)
+--    end
+--end
 
 
 --require('lspconfig').tsserver.setup({

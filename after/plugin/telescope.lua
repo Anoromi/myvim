@@ -30,7 +30,7 @@ require('telescope').setup {
     wrap_results = true,
     file_ignore_patterns = {
       "node_modules",
-      ".git",
+      ".git/",
       ".output",
       ".nuxt",
       "dist",
@@ -48,8 +48,8 @@ require('telescope').setup {
       '--line-number',
       '--column',
       '--smart-case',
-      '--ignore-file',
-      '.gitignore'
+      --'--ignore-file',
+      --'.gitignore'
     },
   },
   extensions = {
@@ -67,6 +67,8 @@ require('telescope').setup {
     file_browser = {
       -- disables netrw and use telescope-file-browser in its place
       hijack_netrw = true,
+      no_ignore = true,
+      respect_gitignore = false,
       --mappings = {
       --  ["i"] = {
       --    -- your custom insert mode mappings
