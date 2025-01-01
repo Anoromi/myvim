@@ -17,15 +17,15 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 
 
-local Path = require("pathlib")
-
-local dir = Path('~')
-local neovimConfigPath = dir / ".vim/undodir"
-
---vim.opt.undodir = os.getenv("USER") .. "/.vim/undodir"
-vim.opt.undodir = vim.fn.expand(tostring(neovimConfigPath))
-
-vim.opt.undofile = true
+-- local Path = require("pathlib")
+--
+-- local dir = Path('~')
+-- local neovimConfigPath = dir / ".vim/undodir"
+--
+-- --vim.opt.undodir = os.getenv("USER") .. "/.vim/undodir"
+-- vim.opt.undodir = vim.fn.expand(tostring(neovimConfigPath))
+--
+-- vim.opt.undofile = true
 
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
