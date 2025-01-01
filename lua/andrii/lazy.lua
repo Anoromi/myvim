@@ -175,14 +175,14 @@ require("lazy").setup({
       }
     },
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-    { "junegunn/fzf",                             build = "./install --bin" },
-    {
-      "ibhagwan/fzf-lua",
-      lazy = false,
-      -- optional for icon support
-      dependencies = { "nvim-tree/nvim-web-devicons" },
-
-    },
+    -- { "junegunn/fzf",                             build = "./install --bin" },
+    -- {
+    --   "ibhagwan/fzf-lua",
+    --   lazy = false,
+    --   -- optional for icon support
+    --   dependencies = { "nvim-tree/nvim-web-devicons" },
+    --
+    -- },
     { "gbrlsnchs/telescope-lsp-handlers.nvim" },
     --{
     --  "JManch/sunset.nvim",
