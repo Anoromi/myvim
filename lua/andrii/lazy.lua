@@ -21,6 +21,9 @@ vim.opt.rtp:prepend(lazypath)
 --vim.g.mapleader = " "
 --vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim
+
+local IN_WINDOWS = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
+
 require("lazy").setup({
   rocks = {
     hererocks = true
@@ -59,12 +62,29 @@ require("lazy").setup({
     {
       "tpope/vim-fugitive"
     },
+    --[[     {
+      "L3MON4D3/LuaSnip",
+      -- follow latest release.
+      version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+      -- install jsregexp (optional!).
+      build = IN_WINDOWS and "make install_jsregexp CC=gcc" or "make install_jsregexp",
+
+      dependencies = {
+        { "rafamadriz/friendly-snippets" }
+      }
+    }, ]]
+
+--[[     {
+      "kmarius/jsregexp",
+      build = "rockspec"
+    }, ]]
     {
       "L3MON4D3/LuaSnip",
       -- follow latest release.
       version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
       -- install jsregexp (optional!).
-      build = "make install_jsregexp",
+      --[[       build = IN_WINDOWS and "make install_jsregexp CC=gcc" or "make install_jsregexp", ]]
+
       dependencies = {
         { "rafamadriz/friendly-snippets" }
       }
