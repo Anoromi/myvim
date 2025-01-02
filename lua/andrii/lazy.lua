@@ -22,9 +22,9 @@ vim.opt.rtp:prepend(lazypath)
 --vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim
 require("lazy").setup({
-  --rocks = {
-  --  hererocks = true
-  --},
+  rocks = {
+    hererocks = true
+  },
   spec = {
 
     {
@@ -147,15 +147,12 @@ require("lazy").setup({
       event = "VeryLazy",
       config = function()
         require("nvim-surround").setup({
-          -- Configuration here, or leave empty to use defaults
         })
       end
     },
     {
       'numToStr/Comment.nvim',
-      opts = {
-        -- add any options here
-      }
+      opts = {}
     },
     {
       'nvim-lualine/lualine.nvim',
@@ -184,32 +181,6 @@ require("lazy").setup({
     --
     -- },
     { "gbrlsnchs/telescope-lsp-handlers.nvim" },
-    --{
-    --  "JManch/sunset.nvim",
-    --  dependencies = {
-    --    {
-    --      "scottmckendry/cyberdream.nvim"
-    --      -- "colorscheme plugin",
-    --      -- config = function
-    --      --     -- Colorscheme plugin config
-    --      -- end,
-    --    },
-    --  },
-    --  lazy = false,
-    --  priority = 1000,
-    --  opts = {
-    --    latitude = 50,
-    --    longitude = 30,
-    --  },
-    --}
-    {
-      "vhyrro/luarocks.nvim",
-      priority = 1000,                          -- Very high priority is required, luarocks.nvim should run as the first plugin in your config.
-      opts = {
-        rocks = { "lunajson", "pathlib.nvim" }, -- specifies a list of rocks to install
-        -- luarocks_build_args = { "--with-lua=/my/path" }, -- extra options to pass to luarocks's configuration script
-      },
-    },
     {
       "ggandor/leap.nvim"
     },
@@ -242,17 +213,11 @@ require("lazy").setup({
     {
       "nvim-telescope/telescope-file-browser.nvim",
       dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
-    }
-    -- {
-    --   "supermaven-inc/supermaven-nvim",
-    --   config = function()
-    --     require("supermaven-nvim").setup({})
-    --   end,
-    -- },
-    --{
-    --  "easymotion/vim-easymotion"
-    --}
-
+    },
+    {
+      "pysan3/pathlib.nvim",
+      build = "rockspec"
+    },
   },
 
   -- Configure any other settings here. See the documentation for more details.
