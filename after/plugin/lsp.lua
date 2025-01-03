@@ -58,6 +58,7 @@ require('mason-lspconfig').setup({
       require('lspconfig')[server_name].setup({})
     end,
 
+    rust_analyzer = lsp.noop,
     --eslint = lsp.noop,
     eslint = function()
       if skip_server_setup.eslint == nil then

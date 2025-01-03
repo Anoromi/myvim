@@ -74,7 +74,7 @@ require("lazy").setup({
       }
     }, ]]
 
---[[     {
+    --[[     {
       "kmarius/jsregexp",
       build = "rockspec"
     }, ]]
@@ -238,6 +238,11 @@ require("lazy").setup({
       "pysan3/pathlib.nvim",
       build = "rockspec"
     },
+    {
+      'mrcjkb/rustaceanvim',
+      version = '^5',
+      lazy = false,
+    }
   },
 
   -- Configure any other settings here. See the documentation for more details.
