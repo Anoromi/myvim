@@ -242,7 +242,9 @@ require("lazy").setup({
       'mrcjkb/rustaceanvim',
       version = '^5',
       lazy = false,
-    }
+    },
+    { 'echasnovski/mini.nvim', version = '*' },
+    { 'pest-parser/pest.vim' }
   },
 
   -- Configure any other settings here. See the documentation for more details.
