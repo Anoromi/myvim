@@ -3,6 +3,7 @@ local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<C-b>', builtin.oldfiles, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 local function generateLspOpts()
@@ -25,20 +26,22 @@ vim.keymap.set("n", "<leader>pv", ":Telescope file_browser path=%:p:h select_buf
 --vim.keymap.set('n', 'gdd', builtin.lsp_document_diagnostics, {})
 --vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
 
-require('telescope').setup {
+local telescope = require('telescope')
+local fb_actions = telescope.extensions.file_browser.actions
+telescope.setup {
   defaults = {
     wrap_results = true,
     file_ignore_patterns = {
-      "node_modules",
-      ".git/",
-      ".output",
-      ".nuxt",
-      "dist",
-      ".next",
-      ".vendor",
-      "./var/cache/dev",
-      "target",
-      ".angular"
+      -- "node_modules",
+      -- ".git/",
+      -- ".output",
+      -- ".nuxt",
+      -- "dist",
+      -- ".next",
+      -- ".vendor",
+      -- "./var/cache/dev",
+      -- "target",
+      -- ".angular"
     },
     vimgrep_arguments = {
       'rg',
@@ -67,16 +70,18 @@ require('telescope').setup {
     file_browser = {
       -- disables netrw and use telescope-file-browser in its place
       hijack_netrw = true,
-      no_ignore = true,
+      no_ignore = false,
+      hidden = { file_browser = true, folder_browser = true },
       respect_gitignore = false,
-      --mappings = {
-      --  ["i"] = {
-      --    -- your custom insert mode mappings
-      --  },
+      mappings = {
+       ["i"] = {
+         -- your custom insert mode mappings
+          ["<C-h>"] = fb_actions.goto_home_dir,
+       },
       --  ["n"] = {
       --    -- your custom normal mode mappings
       --  },
-      --},
+      },
     },
   }
 }
