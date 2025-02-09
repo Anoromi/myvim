@@ -181,16 +181,6 @@ require("lazy").setup({
         theme = "vscode", -- "auto" will set the theme dynamically based on the colorscheme
       },
     },
-    {
-      "scottmckendry/cyberdream.nvim",
-      lazy = false,
-      priority = 1000,
-      opts = {
-        theme = {
-          variant = "auto"
-        }
-      }
-    },
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     -- { "junegunn/fzf",                             build = "./install --bin" },
     -- {
