@@ -25,7 +25,7 @@ local lsp_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
   vim.keymap.set('n', '<leader>gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
   vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-  vim.keymap.set({ 'n', 'x' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+  vim.keymap.set({ 'n', 'x', 'v' }, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
   vim.keymap.set({ 'n', 'v', 'x' }, '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
   -- vim.keymap.set('v', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
   vim.keymap.set('n', '<C-.>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
@@ -102,8 +102,8 @@ require('mason-lspconfig').setup({
       })
     end,
 
-    ['pest_ls'] = function ()
-        require('pest-vim').setup {}
+    ['pest_ls'] = function()
+      require('pest-vim').setup {}
     end,
 
     tailwindcss = function()
@@ -145,7 +145,16 @@ require('mason-lspconfig').setup({
           client.server_capabilities.definitionProvider = false
         end,
       }
-    end
+    end,
+		
+		jsonls = function ()
+      require('lspconfig').jsonls.setup({
+        on_init = function(client)
+          client.server_capabilities.documentFormattingProvider = false
+          client.server_capabilities.documentFormattingRangeProvider = false
+        end,
+      })
+		end
 
 
     -- volar = function()
@@ -248,29 +257,52 @@ null_ls.setup({
     -- Replace these with the tools you have installed
     -- make sure the source name is supported by null-ls
     -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md
-    --null_ls.builtins.formatting.prettier,
+    -- null_ls.builtins.formatting.prettier,
     null_ls.builtins.formatting.prettierd,
     --require("none-ls.formatting.rustfmt"),
     --
     --require("none-ls.code_actions.eslint"),
     --require("none-ls.diagnostics.eslint"),
     --require("none-ls.formatting.eslint"),
-    --require("none-ls.code_actions.eslint_d"),
-    --require("none-ls.diagnostics.eslint_d"),
-    --require("none-ls.formatting.eslint_d"),
+    require("none-ls.code_actions.eslint_d"),
+    require("none-ls.diagnostics.eslint_d"),
+    require("none-ls.formatting.eslint_d"),
 
     --null_ls.builtins.diagnostics.eslint,
     --null_ls.builtins.formatting.stylua,
     null_ls.builtins.formatting.phpcsfixer,
     null_ls.builtins.formatting.nixpkgs_fmt,
     --null_ls.builtins.diagnostics.psalm,
-    null_ls.builtins.diagnostics.phpstan
+    null_ls.builtins.diagnostics.phpstan,
+    -- require("none-ls.formatting.rustfmt")
   }
 })
 
 
 --vim.keymap.set("n", "<leader>fm", ":LspZeroFormat<CR>")
-vim.keymap.set("n", "<A-f>", ":lua vim.lsp.buf.format({ timeout_ms = 10000})<CR>")
+vim.keymap.set({ "n", "x", "v" }, "<A-f>", ":lua vim.lsp.buf.format({ timeout_ms = 10000})<CR>")
+
+vim.g.rustaceanvim = {
+  -- Plugin configuration
+  tools = {
+  },
+  -- LSP configuration
+  server = {
+    on_attach = function(client, bufnr)
+      -- client.server_capabilities.documentFormattingProvider = false
+      -- client.server_capabilities.documentFormattingRangeProvider = false
+      -- you can also put keymaps in here
+    end,
+    -- default_settings = {
+    --   -- rust-analyzer language server configuration
+    --   ['rust-analyzer'] = {
+    --   },
+    -- },
+  },
+  -- DAP configuration
+  -- dap = {
+  -- },
+}
 
 
 --for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
