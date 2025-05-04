@@ -89,6 +89,16 @@ require("lazy").setup({
 				{ "rafamadriz/friendly-snippets" }
 			}
 		},
+		{ 'neovim/nvim-lspconfig' },           -- Required
+		{ 'williamboman/mason.nvim' },         -- Optional
+		{ 'williamboman/mason-lspconfig.nvim' }, -- Optional
+		{ 'hrsh7th/nvim-cmp' },                -- Required
+		{ 'hrsh7th/cmp-nvim-lsp' },            -- Required
+		{ 'L3MON4D3/LuaSnip' },                -- Required
+
+		{ 'hrsh7th/cmp-buffer' },
+		{ 'hrsh7th/cmp-path' },
+		{ 'saadparwaiz1/cmp_luasnip' },
 		{
 			'VonHeikemen/lsp-zero.nvim',
 			branch = 'v4.x',
@@ -109,6 +119,7 @@ require("lazy").setup({
 				--{ 'rafamadriz/friendly-snippets' },
 			}
 		},
+		{ 'saghen/blink.cmp', version = '1.*' },
 		{ 'stevearc/dressing.nvim' },
 
 		-- { 'junegunn/fzf', build = './install --bin', },
@@ -233,9 +244,9 @@ require("lazy").setup({
 			version = '^5',
 			lazy = false,
 		},
-		{ 'echasnovski/mini.nvim',  version = '*' },
+		{ 'echasnovski/mini.nvim',   version = '*' },
 		{ 'pest-parser/pest.vim' },
-		{ 'augmentcode/augment.vim', enabled = false },
+		{ 'augmentcode/augment.vim', enabled = true },
 
 		{
 			"yetone/avante.nvim",
@@ -248,9 +259,9 @@ require("lazy").setup({
 				gemini = {
 					-- endpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
 					model = "gemini-2.0-flash", -- your desired model (or use gpt-4o, etc.)
-					timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
+					timeout = 30000,       -- Timeout in milliseconds, increase this for reasoning models
 					temperature = 0,
-					max_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
+					max_tokens = 8192,     -- Increase this to include reasoning tokens (for reasoning models)
 					--reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
 				},
 			},
