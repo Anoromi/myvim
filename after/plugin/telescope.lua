@@ -1,16 +1,17 @@
 local builtin = require('telescope.builtin')
 
+local function generateLspOpts()
+  --local make_entry = require "telescope.make_entry"
+  return { file_ignore_patterns = { ".git" }, show_line = false,
+  }
+end
+
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<C-b>', builtin.oldfiles, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
-local function generateLspOpts()
-  --local make_entry = require "telescope.make_entry"
-  return { file_ignore_patterns = { ".git" }, show_line = false,
-  }
-end
 
 vim.keymap.set('n', 'gd', function() builtin.lsp_definitions(generateLspOpts()) end, {})
 --vim.keymap.set('n', 'gD', builtin.lsp_declarations, {})
@@ -33,7 +34,7 @@ telescope.setup {
     wrap_results = true,
     file_ignore_patterns = {
       -- "node_modules",
-      -- ".git/",
+      ".git/",
       -- ".output",
       -- ".nuxt",
       -- "dist",

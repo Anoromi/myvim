@@ -13,9 +13,6 @@
 			"local current_dir = vim.fn.expand(\"%:p:h\") -- Gets the directory of the current file",
 			"-- Alternative: local current_dir = vim.fn.getcwd()  -- Gets the current working directory",
 			"",
-			"-- Add the current directory to workspace folders",
-			"table.insert(workspace_folders, current_dir)",
-			"vim.g.augment_workspace_folders = workspace_folders",
 			"end"
 		]
 	}

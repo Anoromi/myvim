@@ -348,12 +348,32 @@ require("luasnip.loaders.from_vscode").lazy_load({
 local conform = require("conform")
 
 conform.setup({
+	formatters = {
+		orustfmt = {
+			command = "rustup",
+			options = {
+				-- The default edition of Rust to use when no Cargo.toml file is found
+				default_edition = "2021",
+			},
+			args = function(self, ctx)
+				local args = { "run", "nightly-2025-04-02-x86_64-pc-windows-msvc", "orustfmt", "--emit=stdout" }
+				-- local edition = require("conform.util").parse_rust_edition(ctx.dirname) or self.options.default_edition
+				-- table.insert(args, "--edition=" .. edition)
+
+				return args
+			end,
+			cwd = require("conform.util").root_file({
+				"rustfmt.toml",
+				".rustfmt.toml",
+			}),
+		},
+	},
 	formatters_by_ft = {
 		javascript = { "prettierd", "eslint_d" },
 		typescript = { "prettierd", "eslint_d" },
 		javascriptreact = { "prettierd", "eslint_d" },
 		typescriptreact = { "prettierd", "eslint_d" },
-		rust = { "rustfmt" },
+		rust = { "rustfmt", "orustfmt" },
 		svelte = { "prettierd" },
 		css = { "prettierd" },
 		html = { "prettierd" },
@@ -436,8 +456,7 @@ vim.g.rustaceanvim = {
 	server = {
 		-- default_settings = {
 		--   -- rust-analyzer language server configuration
-		--   ['rust-analyzer'] = {
-		--   },
+		["rust-analyzer"] = {},
 		-- },
 	},
 	-- DAP configuration
