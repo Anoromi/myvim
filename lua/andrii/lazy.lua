@@ -6,7 +6,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
 			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out,                            "WarningMsg" },
+			{ out, "WarningMsg" },
 			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
@@ -26,41 +26,42 @@ local IN_WINDOWS = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
 
 require("lazy").setup({
 	rocks = {
-		hererocks = true
+		hererocks = true,
 	},
 	spec = {
 
 		{
-			'nvim-telescope/telescope.nvim',
-			tag = '0.1.8',
+			"nvim-telescope/telescope.nvim",
+			tag = "0.1.8",
 			-- or                            , branch = '0.1.x',
-			dependencies = { { 'nvim-lua/plenary.nvim' }, { 'nvim-tree/nvim-web-devicons' } }
+			dependencies = { { "nvim-lua/plenary.nvim" }, { "nvim-tree/nvim-web-devicons" } },
 		},
 		{
-			'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'
+			"nvim-treesitter/nvim-treesitter",
+			build = ":TSUpdate",
 		},
 		{
 			"nvim-treesitter/nvim-treesitter-textobjects",
 		},
 		{
-			'windwp/nvim-ts-autotag',
-			dependencies = 'nvim-treesitter/nvim-treesitter',
-			lazy = false
+			"windwp/nvim-ts-autotag",
+			dependencies = "nvim-treesitter/nvim-treesitter",
+			lazy = false,
 		},
 		{
 			"windwp/nvim-autopairs",
-			dependencies = 'nvim-treesitter/nvim-treesitter',
+			dependencies = "nvim-treesitter/nvim-treesitter",
 			opts = {
-				enable_check_bracket_line = false
-			}
+				enable_check_bracket_line = false,
+			},
 		},
 		{
 			"ThePrimeagen/harpoon",
 			branch = "harpoon2",
-			dependencies = { "nvim-lua/plenary.nvim" }
+			dependencies = { "nvim-lua/plenary.nvim" },
 		},
 		{
-			"tpope/vim-fugitive"
+			"tpope/vim-fugitive",
 		},
 		--[[     {
       "L3MON4D3/LuaSnip",
@@ -86,41 +87,48 @@ require("lazy").setup({
 			--[[       build = IN_WINDOWS and "make install_jsregexp CC=gcc" or "make install_jsregexp", ]]
 
 			dependencies = {
-				{ "rafamadriz/friendly-snippets" }
-			}
+				{ "rafamadriz/friendly-snippets" },
+			},
 		},
-		{ 'neovim/nvim-lspconfig' },           -- Required
-		{ 'williamboman/mason.nvim' },         -- Optional
-		{ 'williamboman/mason-lspconfig.nvim' }, -- Optional
-		{ 'hrsh7th/nvim-cmp' },                -- Required
-		{ 'hrsh7th/cmp-nvim-lsp' },            -- Required
-		{ 'L3MON4D3/LuaSnip' },                -- Required
-
-		{ 'hrsh7th/cmp-buffer' },
-		{ 'hrsh7th/cmp-path' },
-		{ 'saadparwaiz1/cmp_luasnip' },
+		{ "neovim/nvim-lspconfig" }, -- Required
+		{ "williamboman/mason.nvim" }, -- Optional
+		{ "williamboman/mason-lspconfig.nvim" }, -- Optional
 		{
-			'VonHeikemen/lsp-zero.nvim',
-			branch = 'v4.x',
+			"hrsh7th/nvim-cmp",
+			enabled = false,
+		}, -- Required
+		{
+			"hrsh7th/cmp-nvim-lsp",
+			enabled = false,
+		}, -- Required
+		{ "L3MON4D3/LuaSnip" }, -- Required
+
+		{ "hrsh7th/cmp-buffer", enabled = false },
+		{ "hrsh7th/cmp-path", enabled = false },
+		{ "saadparwaiz1/cmp_luasnip", enabled = false },
+		{
+			"VonHeikemen/lsp-zero.nvim",
+			branch = "v4.x",
 			dependencies = {
 				-- LSP Support
-				{ 'neovim/nvim-lspconfig' },         -- Required
-				{ 'williamboman/mason.nvim' },       -- Optional
-				{ 'williamboman/mason-lspconfig.nvim' }, -- Optional
+				{ "neovim/nvim-lspconfig" }, -- Required
+				{ "williamboman/mason.nvim" }, -- Optional
+				{ "williamboman/mason-lspconfig.nvim" }, -- Optional
 
 				-- Autocompletion
-				{ 'hrsh7th/nvim-cmp' }, -- Required
-				{ 'hrsh7th/cmp-nvim-lsp' }, -- Required
-				{ 'L3MON4D3/LuaSnip' }, -- Required
+				{ "hrsh7th/nvim-cmp" }, -- Required
+				{ "hrsh7th/cmp-nvim-lsp" }, -- Required
+				{ "L3MON4D3/LuaSnip" }, -- Required
 
-				{ 'hrsh7th/cmp-buffer' },
-				{ 'hrsh7th/cmp-path' },
-				{ 'saadparwaiz1/cmp_luasnip' },
+				{ "hrsh7th/cmp-buffer" },
+				{ "hrsh7th/cmp-path" },
+				{ "saadparwaiz1/cmp_luasnip" },
 				--{ 'rafamadriz/friendly-snippets' },
-			}
+			},
+			enabled = false,
 		},
-		{ 'saghen/blink.cmp', version = '1.*' },
-		{ 'stevearc/dressing.nvim' },
+		{ "saghen/blink.cmp", version = "1.*" },
+		{ "stevearc/dressing.nvim" },
 
 		-- { 'junegunn/fzf', build = './install --bin', },
 		-- { 'ibhagwan/fzf-lua',
@@ -129,11 +137,11 @@ require("lazy").setup({
 		--   }
 		{
 			"nvimtools/none-ls.nvim",
-			dependencies = { 'nvim-lua/plenary.nvim', 'nvimtools/none-ls-extras.nvim' },
+			dependencies = { "nvim-lua/plenary.nvim", "nvimtools/none-ls-extras.nvim" },
 		},
 
 		{
-			"Mofiqul/vscode.nvim"
+			"Mofiqul/vscode.nvim",
 		},
 		{
 			"folke/trouble.nvim",
@@ -177,22 +185,21 @@ require("lazy").setup({
 			version = "*", -- Use for stability; omit to use `main` branch for the latest features
 			event = "VeryLazy",
 			config = function()
-				require("nvim-surround").setup({
-				})
-			end
+				require("nvim-surround").setup({})
+			end,
 		},
 		{
-			'numToStr/Comment.nvim',
-			opts = {}
+			"numToStr/Comment.nvim",
+			opts = {},
 		},
 		{
-			'nvim-lualine/lualine.nvim',
-			dependencies = { 'nvim-tree/nvim-web-devicons' },
+			"nvim-lualine/lualine.nvim",
+			dependencies = { "nvim-tree/nvim-web-devicons" },
 			opts = {
 				theme = "vscode", -- "auto" will set the theme dynamically based on the colorscheme
 			},
 		},
-		{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		-- { "junegunn/fzf",                             build = "./install --bin" },
 		-- {
 		--   "ibhagwan/fzf-lua",
@@ -203,7 +210,7 @@ require("lazy").setup({
 		-- },
 		{ "gbrlsnchs/telescope-lsp-handlers.nvim" },
 		{
-			"ggandor/leap.nvim"
+			"ggandor/leap.nvim",
 		},
 
 		-- Custom Parameters (with defaults)
@@ -215,11 +222,11 @@ require("lazy").setup({
 			dependencies = {
 				"nvim-lua/plenary.nvim",
 				"nvim-treesitter/nvim-treesitter",
-				"hrsh7th/nvim-cmp",                  -- Optional: For using slash commands and variables in the chat buffer
-				"nvim-telescope/telescope.nvim",     -- Optional: For using slash commands
+				"hrsh7th/nvim-cmp", -- Optional: For using slash commands and variables in the chat buffer
+				"nvim-telescope/telescope.nvim", -- Optional: For using slash commands
 				{ "stevearc/dressing.nvim", opts = {} }, -- Optional: Improves the default Neovim UI
 			},
-			config = true
+			config = true,
 		},
 		{
 			"ThePrimeagen/refactoring.nvim",
@@ -233,20 +240,20 @@ require("lazy").setup({
 		},
 		{
 			"nvim-telescope/telescope-file-browser.nvim",
-			dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+			dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
 		},
 		{
 			"pysan3/pathlib.nvim",
-			build = "rockspec"
+			build = "rockspec",
 		},
 		{
-			'mrcjkb/rustaceanvim',
-			version = '^5',
+			"mrcjkb/rustaceanvim",
+			version = "^5",
 			lazy = false,
 		},
-		{ 'echasnovski/mini.nvim',   version = '*' },
-		{ 'pest-parser/pest.vim' },
-		{ 'augmentcode/augment.vim', enabled = true },
+		{ "echasnovski/mini.nvim", version = "*" },
+		{ "pest-parser/pest.vim" },
+		{ "augmentcode/augment.vim", enabled = true },
 
 		{
 			"yetone/avante.nvim",
@@ -259,9 +266,9 @@ require("lazy").setup({
 				gemini = {
 					-- endpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
 					model = "gemini-2.0-flash", -- your desired model (or use gpt-4o, etc.)
-					timeout = 30000,       -- Timeout in milliseconds, increase this for reasoning models
+					timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
 					temperature = 0,
-					max_tokens = 8192,     -- Increase this to include reasoning tokens (for reasoning models)
+					max_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
 					--reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
 				},
 			},
@@ -274,12 +281,12 @@ require("lazy").setup({
 				"nvim-lua/plenary.nvim",
 				"MunifTanjim/nui.nvim",
 				--- The below dependencies are optional,
-				"echasnovski/mini.pick",     -- for file_selector provider mini.pick
+				"echasnovski/mini.pick", -- for file_selector provider mini.pick
 				"nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-				"hrsh7th/nvim-cmp",          -- autocompletion for avante commands and mentions
-				"ibhagwan/fzf-lua",          -- for file_selector provider fzf
+				"hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+				"ibhagwan/fzf-lua", -- for file_selector provider fzf
 				"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-				"zbirenbaum/copilot.lua",    -- for providers='copilot'
+				"zbirenbaum/copilot.lua", -- for providers='copilot'
 				{
 					-- support for image pasting
 					"HakonHarnes/img-clip.nvim",
@@ -299,14 +306,22 @@ require("lazy").setup({
 				},
 				{
 					-- Make sure to set this up properly if you have lazy=true
-					'MeanderingProgrammer/render-markdown.nvim',
+					"MeanderingProgrammer/render-markdown.nvim",
 					opts = {
 						file_types = { "markdown", "Avante" },
 					},
 					ft = { "markdown", "Avante" },
 				},
+				{
+					"stevearc/conform.nvim",
+					event = { "BufReadPre", "BufNewFile" },
+				},
+				{
+					"mfussenegger/nvim-lint",
+					event = { "BufReadPre", "BufNewFile" },
+				},
 			},
-		}
+		},
 	},
 
 	-- Configure any other settings here. See the documentation for more details.
@@ -314,5 +329,4 @@ require("lazy").setup({
 	install = { colorscheme = { "vscode" } },
 	-- automatically check for plugin updates
 	checker = { enabled = false },
-
 })
