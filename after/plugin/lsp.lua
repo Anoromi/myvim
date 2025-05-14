@@ -27,7 +27,7 @@ require("blink.cmp").setup({
 
 	-- (Default) Only show the documentation popup when manually triggered
 	completion = {
-		documentation = { auto_show = false },
+		documentation = { auto_show = true },
 	},
 
 	-- Default list of enabled providers defined so that you can extend it
@@ -356,7 +356,7 @@ conform.setup({
 				default_edition = "2021",
 			},
 			args = function(self, ctx)
-				local args = { "run", "nightly-2025-04-02-x86_64-pc-windows-msvc", "orustfmt", "--emit=stdout" }
+				local args = { "run", "nightly-2025-04-02", "orustfmt", "--emit=stdout" }
 				-- local edition = require("conform.util").parse_rust_edition(ctx.dirname) or self.options.default_edition
 				-- table.insert(args, "--edition=" .. edition)
 
@@ -373,7 +373,7 @@ conform.setup({
 		typescript = { "prettierd", "eslint_d" },
 		javascriptreact = { "prettierd", "eslint_d" },
 		typescriptreact = { "prettierd", "eslint_d" },
-		rust = { "rustfmt", "orustfmt" },
+		rust = { "rustfmt" },
 		svelte = { "prettierd" },
 		css = { "prettierd" },
 		html = { "prettierd" },
