@@ -17,6 +17,8 @@ require("blink.cmp").setup({
 	keymap = {
 		preset = "super-tab",
 		["<CR>"] = { "accept", "fallback" },
+    ['<A-S>'] = { 'show', 'show_documentation', 'hide_documentation' },
+
 	},
 
 	appearance = {
