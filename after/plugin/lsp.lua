@@ -17,8 +17,7 @@ require("blink.cmp").setup({
 	keymap = {
 		preset = "super-tab",
 		["<CR>"] = { "accept", "fallback" },
-    ['<A-S>'] = { 'show', 'show_documentation', 'hide_documentation' },
-
+		["<A-S>"] = { "show", "show_documentation", "hide_documentation" },
 	},
 
 	appearance = {
@@ -109,164 +108,294 @@ vim.api.nvim_create_autocmd("LspAttach", {
 local lsp_config = config.lsp or {}
 local skip_server_setup = lsp_config.skip_server_setup or {}
 require("mason").setup()
+
 require("mason-lspconfig").setup({
-	ensure_installed = { "ts_ls", "lua_ls" },
-	handlers = {
-		jdtls = function(_) end,
-		phpactor = function(_) end,
-		--intelephense
-		--function(server_name)
-		--	require('lspconfig')[server_name].setup({
-		--		capabilities = lsp_capabilities
-		--	})
-		--end,
-
-		rust_analyzer = function(_) end,
-		--eslint = lsp.noop,
-		eslint = function()
-			if skip_server_setup.eslint == nil then
-				require("lspconfig").eslint.setup({})
-			end
-		end,
-		ts_ls = function()
-			local node_modules = require("os").getenv("GLOBAL_NODE_MODULES")
-			local Path = require("pathlib")
-			local plugin = Path(node_modules) / "@vue" / "typescript-plugin"
-			if node_modules == nil then
-				vim.notify(
-					"No global node modules (GLOBAL_NODE_MODULES) found, lspconfig won't be able to use @vue/typescript-plugin",
-					vim.log.levels.WARN
-				)
-			end
-
-			require("lspconfig").ts_ls.setup({
-				on_init = function(client)
-					--client.server_capabilities.documentFormattingProvider = false
-					--client.server_capabilities.documentFormattingRangeProvider = false
-				end,
-				init_options = {
-					plugins = {
-						{
-							name = "@vue/typescript-plugin",
-							--location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
-							location = tostring(plugin),
-							languages = { "javascript", "typescript", "vue" },
-						},
-					},
-				},
-				filetypes = {
-					"javascript",
-					"typescript",
-					"vue",
-					"javascriptreact",
-					"typescriptreact",
-				},
-			})
-		end,
-
-		["pest_ls"] = function()
-			require("pest-vim").setup({})
-		end,
-
-		tailwindcss = function()
-			require("lspconfig").tailwindcss.setup({
-				settings = {
-					tailwindCSS = {
-						lint = {
-							--cssConflict = "ignore"
-						},
-						classAttributes = { "class", "className", "ngClass", ".*Styles", ".*Class" },
-						experimental = {
-							classRegex = {
-								"tw([^])",
-								'tw="([^"])',
-								'tw={"([^"}])',
-								"clsx\\(([^)]*)\\)",
-								"cn\\(([^)]*)\\)",
-								"cva\\(([^)]*)\\)",
-								"a*Class='([^']+)'",
-								-- 'tw\.\w+([^])',
-								--'tw\(.?\)([^])',
-							},
-						},
-					},
-				},
-			})
-		end,
-
-		cssls = function()
-			require("lspconfig").cssls.setup({
-				on_init = function(client)
-					--client.server_capabilities.documentFormattingProvider = false
-					--client.server_capabilities.documentFormattingRangeProvider = false
-				end,
-			})
-		end,
-
-		lua_ls = function()
-			require("lspconfig").lua_ls.setup({
-				settings = {
-					Lua = {
-						telemetry = {
-							enable = false,
-						},
-					},
-				},
-				on_init = function(client)
-					local join = vim.fs.joinpath
-					local path = client.workspace_folders[1].name
-
-					-- Don't do anything if there is project local config
-					if vim.uv.fs_stat(join(path, ".luarc.json")) or vim.uv.fs_stat(join(path, ".luarc.jsonc")) then
-						return
-					end
-
-					local nvim_settings = {
-						runtime = {
-							-- Tell the language server which version of Lua you're using
-							version = "LuaJIT",
-						},
-						diagnostics = {
-							-- Get the language server to recognize the `vim` global
-							globals = { "vim" },
-						},
-						workspace = {
-							checkThirdParty = false,
-							library = {
-								-- Make the server aware of Neovim runtime files
-								vim.env.VIMRUNTIME,
-								vim.fn.stdpath("config"),
-							},
-						},
-					}
-
-					client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, nvim_settings)
-				end,
-			})
-		end,
-
-		cssmodules_ls = function()
-			require("lspconfig").cssmodules_ls.setup({
-				on_attach = function(client)
-					client.server_capabilities.definitionProvider = false
-				end,
-			})
-		end,
-
-		jsonls = function()
-			require("lspconfig").jsonls.setup({
-				on_init = function(client)
-					client.server_capabilities.documentFormattingProvider = false
-					client.server_capabilities.documentFormattingRangeProvider = false
-				end,
-			})
-		end,
-
-		-- volar = function()
-		--   require('lspconfig').volar.setup {}
-		-- end
+	automatic_enable = {
+		exclude = {
+			"rust_analyzer",
+		},
 	},
 })
+-- require("mason-lspconfig").setup({
+-- 	ensure_installed = { "ts_ls", "lua_ls" },
+-- 	handlers = {
+-- 		jdtls = function(_) end,
+-- 		phpactor = function(_) end,
+-- 		--intelephense
+-- 		--function(server_name)
+-- 		--	require('lspconfig')[server_name].setup({
+-- 		--		capabilities = lsp_capabilities
+-- 		--	})
+-- 		--end,
+--
+-- 		rust_analyzer = function(_) end,
+-- 		--eslint = lsp.noop,
+-- 		eslint = function()
+-- 			if skip_server_setup.eslint == nil then
+-- 				require("lspconfig").eslint.setup({})
+-- 			end
+-- 		end,
+-- 		ts_ls = function()
+-- 			local node_modules = require("os").getenv("GLOBAL_NODE_MODULES")
+-- 			local Path = require("pathlib")
+-- 			local plugin = Path(node_modules) / "@vue" / "typescript-plugin"
+-- 			if node_modules == nil then
+-- 				vim.notify(
+-- 					"No global node modules (GLOBAL_NODE_MODULES) found, lspconfig won't be able to use @vue/typescript-plugin",
+-- 					vim.log.levels.WARN
+-- 				)
+-- 			end
+--
+-- 			require("lspconfig").ts_ls.setup({
+-- 				on_init = function(client)
+-- 					--client.server_capabilities.documentFormattingProvider = false
+-- 					--client.server_capabilities.documentFormattingRangeProvider = false
+-- 				end,
+-- 				init_options = {
+-- 					plugins = {
+-- 						{
+-- 							name = "@vue/typescript-plugin",
+-- 							--location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
+-- 							location = tostring(plugin),
+-- 							languages = { "javascript", "typescript", "vue" },
+-- 						},
+-- 					},
+-- 				},
+-- 				filetypes = {
+-- 					"javascript",
+-- 					"typescript",
+-- 					"vue",
+-- 					"javascriptreact",
+-- 					"typescriptreact",
+-- 				},
+-- 			})
+-- 		end,
+--
+-- 		["pest_ls"] = function()
+-- 			require("pest-vim").setup({})
+-- 		end,
+--
+-- 		tailwindcss = function()
+-- 			vim.notify("Hewo there")
+-- 			require("lspconfig").tailwindcss.setup({
+-- 				settings = {
+-- 					tailwindCSS = {
+-- 						lint = {
+-- 							--cssConflict = "ignore"
+-- 						},
+-- 						classAttributes = { "class", "className", "ngClass", ".*Styles", ".*Class" },
+-- 						experimental = {
+-- 							classRegex = {
+-- 								"tw([^])",
+-- 								'tw="([^"])',
+-- 								'tw={"([^"}])',
+-- 								"clsx\\(([^)]*)\\)",
+-- 								"cn\\(([^)]*)\\)",
+-- 								"cva\\(([^)]*)\\)",
+-- 								"a*Class='([^']+)'",
+-- 								-- 'tw\.\w+([^])',
+-- 								--'tw\(.?\)([^])',
+-- 							},
+-- 						},
+-- 					},
+-- 				},
+-- 			})
+-- 		end,
+--
+-- 		cssls = function()
+-- 			require("lspconfig").cssls.setup({
+-- 				on_init = function(client)
+-- 					--client.server_capabilities.documentFormattingProvider = false
+-- 					--client.server_capabilities.documentFormattingRangeProvider = false
+-- 				end,
+-- 			})
+-- 		end,
+--
+-- 		lua_ls = function()
+-- 			vim.lsp.config("lua_ls", {
+-- 				settings = {
+-- 					Lua = {
+-- 						telemetry = {
+-- 							enable = false,
+-- 						},
+-- 					},
+-- 				},
+-- 				on_init = function(client)
+-- 					local join = vim.fs.joinpath
+-- 					local path = client.workspace_folders[1].name
+--
+-- 					-- Don't do anything if there is project local config
+-- 					if vim.uv.fs_stat(join(path, ".luarc.json")) or vim.uv.fs_stat(join(path, ".luarc.jsonc")) then
+-- 						return
+-- 					end
+--
+-- 					local nvim_settings = {
+-- 						runtime = {
+-- 							-- Tell the language server which version of Lua you're using
+-- 							version = "LuaJIT",
+-- 						},
+-- 						diagnostics = {
+-- 							-- Get the language server to recognize the `vim` global
+-- 							globals = { "vim" },
+-- 						},
+-- 						workspace = {
+-- 							checkThirdParty = false,
+-- 							library = {
+-- 								-- Make the server aware of Neovim runtime files
+-- 								vim.env.VIMRUNTIME,
+-- 								vim.fn.stdpath("config"),
+-- 							},
+-- 						},
+-- 					}
+--
+-- 					client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, nvim_settings)
+-- 				end,
+-- 			})
+-- 		end,
+--
+-- 		cssmodules_ls = function()
+-- 			require("lspconfig").cssmodules_ls.setup({
+-- 				on_attach = function(client)
+-- 					client.server_capabilities.definitionProvider = false
+-- 				end,
+-- 			})
+-- 		end,
+--
+-- 		jsonls = function()
+-- 			require("lspconfig").jsonls.setup({
+-- 				on_init = function(client)
+-- 					client.server_capabilities.documentFormattingProvider = false
+-- 					client.server_capabilities.documentFormattingRangeProvider = false
+-- 				end,
+-- 			})
+-- 		end,
+--
+-- 		-- volar = function()
+-- 		--   require('lspconfig').volar.setup {}
+-- 		-- end
+-- 	},
+-- })
+
+local function tailwindConfig()
+	return {
+		settings = {
+			tailwindCSS = {
+				lint = {
+					--cssConflict = "ignore"
+				},
+				classAttributes = { "class", "className", "ngClass", ".*Styles", ".*Class" },
+				experimental = {
+					classRegex = {
+						"tw([^])",
+						'tw="([^"])',
+						'tw={"([^"}])',
+						"clsx\\(([^)]*)\\)",
+						"cn\\(([^)]*)\\)",
+						"cva\\(([^)]*)\\)",
+						"a*Class='([^']+)'",
+						-- 'tw\.\w+([^])',
+						--'tw\(.?\)([^])',
+					},
+				},
+			},
+		},
+	}
+end
+local function jsonlsConfig()
+	return {
+		on_init = function(client)
+			client.server_capabilities.documentFormattingProvider = false
+			client.server_capabilities.documentFormattingRangeProvider = false
+		end,
+	}
+end
+
+local function luaLsConfig()
+	return {
+		settings = {
+			Lua = {
+				telemetry = {
+					enable = false,
+				},
+			},
+		},
+		on_init = function(client)
+			local join = vim.fs.joinpath
+			local path = client.workspace_folders[1].name
+
+			-- Don't do anything if there is project local config
+			if vim.uv.fs_stat(join(path, ".luarc.json")) or vim.uv.fs_stat(join(path, ".luarc.jsonc")) then
+				return
+			end
+
+			local nvim_settings = {
+				runtime = {
+					-- Tell the language server which version of Lua you're using
+					version = "LuaJIT",
+				},
+				diagnostics = {
+					-- Get the language server to recognize the `vim` global
+					globals = { "vim" },
+				},
+				workspace = {
+					checkThirdParty = false,
+					library = {
+						-- Make the server aware of Neovim runtime files
+						vim.env.VIMRUNTIME,
+						vim.fn.stdpath("config"),
+					},
+				},
+			}
+
+			client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, nvim_settings)
+		end,
+	}
+end
+
+local function tsLsConfig()
+	local node_modules = require("os").getenv("GLOBAL_NODE_MODULES")
+	local Path = require("pathlib")
+	local plugin = Path(node_modules) / "@vue" / "typescript-plugin"
+	if node_modules == nil then
+		vim.notify(
+			"No global node modules (GLOBAL_NODE_MODULES) found, lspconfig won't be able to use @vue/typescript-plugin",
+			vim.log.levels.WARN
+		)
+	end
+	return {
+		on_init = function(client)
+			--client.server_capabilities.documentFormattingProvider = false
+			--client.server_capabilities.documentFormattingRangeProvider = false
+		end,
+		init_options = {
+			plugins = {
+				{
+					name = "@vue/typescript-plugin",
+					--location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
+					location = tostring(plugin),
+					languages = { "javascript", "typescript", "vue" },
+				},
+			},
+		},
+		filetypes = {
+			"javascript",
+			"typescript",
+			"vue",
+			"javascriptreact",
+			"typescriptreact",
+		},
+	}
+end
+
+vim.lsp.config("tailwindcss", tailwindConfig())
+vim.lsp.config("jsonls", jsonlsConfig())
+vim.lsp.config("cssmodules_ls", {
+	on_attach = function(client)
+		client.server_capabilities.definitionProvider = false
+	end,
+})
+vim.lsp.config("lua_ls", luaLsConfig())
+vim.lsp.config("ts_ls", tsLsConfig())
 
 --lsp.setup()
 
@@ -371,10 +500,10 @@ conform.setup({
 		},
 	},
 	formatters_by_ft = {
-		javascript = { "prettierd", "eslint_d" },
-		typescript = { "prettierd", "eslint_d" },
-		javascriptreact = { "prettierd", "eslint_d" },
-		typescriptreact = { "prettierd", "eslint_d" },
+		javascript = { "prettierd", "eslint" },
+		typescript = { "prettierd", "eslint" },
+		javascriptreact = { "prettierd", "eslint" },
+		typescriptreact = { "prettierd", "eslint" },
 		rust = { "rustfmt" },
 		svelte = { "prettierd" },
 		css = { "prettierd" },
@@ -385,6 +514,7 @@ conform.setup({
 		graphql = { "prettierd" },
 		lua = { "stylua" },
 		python = { "isort", "black" },
+		sql = { "sql-formatter" },
 	},
 })
 
@@ -453,7 +583,9 @@ end)
 
 vim.g.rustaceanvim = {
 	-- Plugin configuration
-	tools = {},
+	tools = {
+		enable_clippy = false,
+	},
 	-- LSP configuration
 	server = {
 		-- default_settings = {

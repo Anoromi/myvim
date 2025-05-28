@@ -90,7 +90,7 @@ require("lazy").setup({
 				{ "rafamadriz/friendly-snippets" },
 			},
 		},
-		{ "neovim/nvim-lspconfig" }, -- Required
+		{ "neovim/nvim-lspconfig", dependencies = { "saghen/blink.cmp" } }, -- Required
 		{ "williamboman/mason.nvim" }, -- Optional
 		{ "williamboman/mason-lspconfig.nvim" }, -- Optional
 		{
@@ -259,21 +259,9 @@ require("lazy").setup({
 			"yetone/avante.nvim",
 			event = "VeryLazy",
 			version = false, -- Never set this value to "*"! Never!
-			opts = {
-				-- add any opts here
-				-- for example
-				provider = "gemini",
-				gemini = {
-					-- endpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
-					model = "gemini-2.0-flash", -- your desired model (or use gpt-4o, etc.)
-					timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
-					temperature = 0,
-					max_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
-					--reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
-				},
-			},
 			-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-			build = IN_WINDOWS and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" or "make",
+			build = IN_WINDOWS and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
+				or "make",
 			-- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
 			dependencies = {
 				"nvim-treesitter/nvim-treesitter",
@@ -319,6 +307,12 @@ require("lazy").setup({
 				{
 					"mfussenegger/nvim-lint",
 					event = { "BufReadPre", "BufNewFile" },
+				},
+				{
+					"nvim-treesitter/nvim-treesitter-context",
+					dependencies = {
+						"nvim-treesitter/nvim-treesitter",
+					},
 				},
 			},
 		},
