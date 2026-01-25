@@ -21,7 +21,7 @@ vim.keymap.set('n', 'gr', function() builtin.lsp_references(generateLspOpts()) e
 vim.keymap.set('n', '<leader>fS', function() builtin.lsp_workspace_symbols() end, {})
 vim.keymap.set('n', '<leader>fs', function() builtin.lsp_document_symbols() end, {})
 vim.keymap.set('n', '<leader>fd', builtin.diagnostics, {})
-vim.keymap.set("n", "<leader>pv", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
+-- vim.keymap.set("n", "<leader>pv", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
 --vim.keymap.set('n', 'gws', builtin.lsp_workspace_symbols, {})
 --vim.keymap.set('n', 'gws', builtin.lsp_workspace_symbols, {})
 --vim.keymap.set('n', 'gdd', builtin.lsp_document_diagnostics, {})
@@ -68,22 +68,22 @@ telescope.setup {
         telescope = require('telescope.themes').get_dropdown({}),
       },
     },
-    file_browser = {
-      -- disables netrw and use telescope-file-browser in its place
-      hijack_netrw = true,
-      no_ignore = false,
-      hidden = { file_browser = true, folder_browser = true },
-      respect_gitignore = false,
-      mappings = {
-       ["i"] = {
-         -- your custom insert mode mappings
-          ["<C-h>"] = fb_actions.goto_home_dir,
-       },
-      --  ["n"] = {
-      --    -- your custom normal mode mappings
-      --  },
-      },
-    },
+    -- file_browser = {
+    --   -- disables netrw and use telescope-file-browser in its place
+    --   hijack_netrw = true,
+    --   -- no_ignore = false,
+    --   -- hidden = { file_browser = true, folder_browser = true },
+    --   -- respect_gitignore = false,
+    --   mappings = {
+    --    ["i"] = {
+    --      -- your custom insert mode mappings
+    --       ["<C-h>"] = fb_actions.goto_home_dir,
+    --    },
+    --   --  ["n"] = {
+    --   --    -- your custom normal mode mappings
+    --   --  },
+    --   },
+    -- },
   }
 }
 
