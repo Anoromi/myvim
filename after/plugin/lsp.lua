@@ -1,16 +1,6 @@
 --local lsp = require("lsp-zero")
 local config = require("andrii.config")
 
-local supermaven = require("supermaven-nvim")
-
-supermaven.setup({
-	keymaps = {
-		accept_suggestion = "<Tab>",
-		clear_suggestion = "<C-]>",
-		accept_word = "<C-d>",
-	},
-})
-
 require("blink.cmp").setup({
 	-- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
 	-- 'super-tab' for mappings similar to vscode (tab to accept)
@@ -540,6 +530,7 @@ conform.setup({
 		lua = { "stylua" },
 		python = { "isort", "black" },
 		sql = { "sql-formatter" },
+		nix = { "nixfmt" }
 	},
 })
 
