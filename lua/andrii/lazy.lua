@@ -26,7 +26,8 @@ local IN_WINDOWS = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
 
 require("lazy").setup({
 	rocks = {
-		hererocks = true,
+		hererocks = false,
+                enabled = true
 	},
 	spec = {
 
@@ -38,11 +39,13 @@ require("lazy").setup({
 		},
 		{
 			"nvim-treesitter/nvim-treesitter",
+			tag = "v0.10.0", 
+			lazy = false,
 			build = ":TSUpdate",
 		},
-		{
-			"nvim-treesitter/nvim-treesitter-textobjects",
-		},
+		--{
+		--	"nvim-treesitter/nvim-treesitter-textobjects",
+		--},
 		{
 			"windwp/nvim-ts-autotag",
 			dependencies = "nvim-treesitter/nvim-treesitter",
@@ -189,6 +192,29 @@ require("lazy").setup({
 			end,
 		},
 		{
+			dir = "/home/anoromi/code/stolen/codediff.nvim",
+			name = "corkdiff.nvim",
+			dependencies = { "MunifTanjim/nui.nvim" },
+			rocks = { "http" },
+			cmd = { "CorkDiff", "CodeDiff" },
+			config = function()
+				require("corkdiff").setup({
+					diff = {
+						layout = "inline",
+					},
+					keymaps = {
+						view = {
+							toggle_layout = "<C-t>",
+						},
+					},
+					t3code = {
+						server_url = vim.env.T3CODE_SERVER_URL or "ws://127.0.0.1:3773/ws",
+						token = vim.env.T3CODE_TOKEN or nil,
+					},
+				})
+			end,
+		},
+		{
 			"numToStr/Comment.nvim",
 			opts = {},
 		},
@@ -210,7 +236,7 @@ require("lazy").setup({
 		-- },
 		{ "gbrlsnchs/telescope-lsp-handlers.nvim" },
 		{
-			"ggandor/leap.nvim",
+			"https://codeberg.org/andyg/leap.nvim",
 		},
 
 		-- Custom Parameters (with defaults)
@@ -253,7 +279,7 @@ require("lazy").setup({
 		},
 		{ "echasnovski/mini.nvim",   version = "*" },
 		{ "pest-parser/pest.vim" },
-		{ "augmentcode/augment.vim", enabled = true },
+		{ "augmentcode/augment.vim", enabled = false },
 
 		-- {
 		-- 	"yetone/avante.nvim",
@@ -311,17 +337,12 @@ require("lazy").setup({
 			"mfussenegger/nvim-lint",
 			event = { "BufReadPre", "BufNewFile" },
 		},
-		{
-			"nvim-treesitter/nvim-treesitter-context",
-			dependencies = {
-				"nvim-treesitter/nvim-treesitter",
-			},
-		},
-		{
-			"supermaven-inc/supermaven-nvim",
-			config = function()
-			end,
-		},
+		--{
+		--	"nvim-treesitter/nvim-treesitter-context",
+		--	dependencies = {
+		--		"nvim-treesitter/nvim-treesitter",
+		--	},
+		--},
 		{
 			'stevearc/oil.nvim',
 			---@module 'oil'

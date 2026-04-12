@@ -24,6 +24,7 @@ map("D", "<C-w><C-r>")
 map("<leader>s", ":wall<cr>")
 map("<leader>n", ":q<cr>")
 map("<leader>t", ":q!<cr>")
+vim.keymap.set("n", "<C-S-s>", "<C-w><C-w>", { noremap = true, silent = true, desc = "Cycle windows" })
 
 --map("<C-t>", ":wincmd k<CR>")
 --map("<C-h>", ":wincmd j<CR>")
