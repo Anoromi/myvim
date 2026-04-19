@@ -66,6 +66,144 @@ require("lazy").setup({
 		{
 			"tpope/vim-fugitive",
 		},
+		{
+			"lewis6991/gitsigns.nvim",
+			event = { "BufReadPre", "BufNewFile" },
+			opts = {
+				signs = {
+					add = { text = "+" },
+					change = { text = "~" },
+					delete = { text = "_" },
+					topdelete = { text = "-" },
+					changedelete = { text = "~" },
+					untracked = { text = "+" },
+				},
+				signcolumn = true,
+				numhl = false,
+				linehl = false,
+				current_line_blame = false,
+			},
+		},
+		{
+			"dstein64/nvim-scrollview",
+			event = { "BufReadPost", "BufNewFile" },
+			dependencies = { "lewis6991/gitsigns.nvim" },
+			opts = {
+				current_only = true,
+				signs_on_startup = { "diagnostics", "search", "marks" },
+				excluded_filetypes = {
+					"help",
+					"lazy",
+					"TelescopePrompt",
+					"Trouble",
+					"qf",
+				},
+				signs_max_per_row_by_group = {
+					diagnostics = 1,
+					gitsigns = 1,
+					corkdiff = 1,
+				},
+			},
+			config = function(_, opts)
+				local scrollview = require("scrollview")
+				scrollview.setup(opts)
+
+				require("scrollview.contrib.gitsigns").setup({
+					enabled = true,
+					add_highlight = "GitSignsAdd",
+					change_highlight = "GitSignsChange",
+					delete_highlight = "GitSignsDelete",
+					add_symbol = "+",
+					change_symbol = "~",
+					delete_symbol = "-",
+				})
+
+				local corkdiff_group = "corkdiff"
+				scrollview.register_sign_group(corkdiff_group)
+				local corkdiff_add = scrollview.register_sign_spec({
+					group = corkdiff_group,
+					highlight = "CodeDiffLineInsert",
+					priority = 55,
+					symbol = "+",
+				}).name
+				local corkdiff_delete = scrollview.register_sign_spec({
+					group = corkdiff_group,
+					highlight = "CodeDiffLineDelete",
+					priority = 56,
+					symbol = "-",
+				}).name
+				scrollview.set_sign_group_state(corkdiff_group, true)
+
+				local function namespace_id(name)
+					return vim.api.nvim_get_namespaces()[name]
+				end
+
+				local function add_line(lines, seen, row, line_count)
+					local line = math.min(math.max(row + 1, 1), line_count)
+					if not seen[line] then
+						seen[line] = true
+						lines[#lines + 1] = line
+					end
+				end
+
+				local function collect_corkdiff_scrollview()
+					if not scrollview.is_sign_group_active(corkdiff_group) then
+						return
+					end
+
+					local namespaces = {
+						namespace_id("codediff-inline"),
+						namespace_id("codediff-highlight"),
+					}
+
+					for _, winid in ipairs(scrollview.get_sign_eligible_windows()) do
+						local bufnr = vim.api.nvim_win_get_buf(winid)
+						local line_count = vim.api.nvim_buf_line_count(bufnr)
+						local lines_add = {}
+						local lines_delete = {}
+						local seen_add = {}
+						local seen_delete = {}
+
+						for _, ns in ipairs(namespaces) do
+							if ns then
+								for _, mark in ipairs(vim.api.nvim_buf_get_extmarks(bufnr, ns, 0, -1, { details = true })) do
+									local row = mark[2]
+									local details = mark[4] or {}
+									if details.hl_group == "CodeDiffLineInsert" or details.hl_group == "CorkDiffLineInsert" then
+										add_line(lines_add, seen_add, row, line_count)
+									elseif details.hl_group == "CodeDiffLineDelete" or details.hl_group == "CorkDiffLineDelete" or details.virt_lines then
+										add_line(lines_delete, seen_delete, row, line_count)
+									end
+								end
+							end
+						end
+
+						vim.b[bufnr][corkdiff_add] = lines_add
+						vim.b[bufnr][corkdiff_delete] = lines_delete
+					end
+				end
+
+				scrollview.set_sign_group_callback(corkdiff_group, collect_corkdiff_scrollview)
+
+				vim.api.nvim_create_autocmd("User", {
+					pattern = {
+						"CodeDiffOpen",
+						"CorkDiffOpen",
+						"CodeDiffFileSelect",
+						"CorkDiffFileSelect",
+						"CodeDiffVirtualFileLoaded",
+						"CorkDiffVirtualFileLoaded",
+					},
+					callback = function()
+						if scrollview.is_sign_group_active(corkdiff_group) then
+							vim.schedule(function()
+								vim.cmd("silent! ScrollViewRefresh")
+							end)
+						end
+					end,
+				})
+			end,
+		},
 		--[[     {
       "L3MON4D3/LuaSnip",
       -- follow latest release.
